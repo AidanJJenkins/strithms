@@ -11,7 +11,7 @@ TEST_DIR = ./tests/group_one
 all: group_one
 
 # Group One Target
-group_one: binary_search bubblesort linear_search stack
+group_one: binary_search bubblesort linear_search stack queue linkedlist
 
 test_binary_search: $(SRC_DIR)/binary_search.c $(TEST_DIR)/binary_search.c
 	$(CC) $(CFLAGS) -o binary_search $(SRC_DIR)/binary_search.c $(TEST_DIR)/binary_search.c
@@ -30,8 +30,16 @@ test_stack: $(SRC_DIR)/stack.c $(TEST_DIR)/stack.c
 	$(CC) $(CFLAGS) -o stack $(SRC_DIR)/stack.c $(TEST_DIR)/stack.c
 	./stack
 
+test_queue: $(SRC_DIR)/queue.c $(TEST_DIR)/queue.c
+	$(CC) $(CFLAGS) -o queue $(SRC_DIR)/queue.c $(TEST_DIR)/queue.c
+	./queue
+
+test_list: $(SRC_DIR)/linkedlist.c $(TEST_DIR)/linkedlist.c
+	$(CC) $(CFLAGS) -o linkedlist $(SRC_DIR)/linkedlist.c $(TEST_DIR)/linkedlist.c
+	./linkedlist
+
 # Clean up
 clean:
-	rm -f binary_search test_bubblesort linear_search stack
+	rm -f binary_search test_bubblesort linear_search stack queue linkedlist
 
 .PHONY: all group_one clean
