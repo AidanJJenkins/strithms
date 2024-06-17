@@ -85,8 +85,81 @@ int remove_val(struct list *l, int val) {
   return -1;
 }
 
+int get(struct list *l, int idx) {
+  if (l->head == NULL || idx > l->count || idx < 0) {
+    return -1;
+  }
+
+  Node *curr = l->head;
+  for (int i = 0; i < idx; i++) {
+    curr = curr->next;
+  }
+
+  return curr->val;
+}
+
+void insert_at(struct list *l, int val, int idx) {
+  if (l->head == NULL || idx > l->count || idx < 0) {
+    return;
+  } else if (idx <= 0) {
+    prepend(l, val);
+  } else if (idx == l->count) {
+    append(l, val);
+  }
+
+  Node *prev = l->head;
+  Node *curr = l->head->next;
+  int i = 1;
+
+  while (curr != NULL) {
+    if (i == idx) {
+      Node *n = create_node(val);
+      prev->next = n;
+      n->next = curr;
+      l->count++;
+    }
+    i++;
+    prev = curr;
+    curr = curr->next;
+  }
+}
+
+int remove_at(struct list *l, int idx) {
+  if (l->head == NULL || idx > l->count || idx < 0) {
+    return -1;
+  }
+
+  if (idx == 0) {
+    Node *temp = l->head;
+    l->head = l->head->next;
+    l->count--;
+    int out = temp->val;
+    free(temp);
+    return out;
+  }
+
+  Node *prev = l->head;
+  Node *curr = l->head->next;
+  int i = 1;
+  while (curr != NULL) {
+    if (i == idx) {
+      Node *temp = curr;
+      prev->next = curr->next;
+      int out = temp->val;
+      l->count--;
+      free(temp);
+      return out;
+    }
+    i++;
+    prev = curr;
+    curr = curr->next;
+  }
+
+  return -1;
+}
+
 void print_list(struct list *l) {
-  struct node *current = l->head;
+  Node *current = l->head;
   while (current != NULL) {
     printf("curr: %d\n", current->val);
     current = current->next;
