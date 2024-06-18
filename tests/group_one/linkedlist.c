@@ -1,8 +1,6 @@
 #include "../../include/group_one/linkedlist.h"
 #include <assert.h>
-#include <stddef.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 void test_list() {
   List *l = init();

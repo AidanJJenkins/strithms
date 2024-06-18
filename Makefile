@@ -3,9 +3,6 @@ CC = gcc
 CFLAGS = -Iinclude -std=c11
 
 # Directories
-# SRC_DIR = ./src/group_one
-# INCLUDE_DIR = ./include/group_one
-# TEST_DIR = ./tests/group_one
 SRC_DIR = ./src
 INCLUDE_DIR = ./include
 TEST_DIR = ./tests
@@ -14,7 +11,7 @@ TEST_DIR = ./tests
 all: group_one
 
 # Group One Target
-group_one: binary_search bubblesort linear_search stack queue linkedlist
+group_one: binary_search bubblesort linear_search stack queue linkedlist reverse_list
 
 test_binary_search: $(SRC_DIR)/group_one/binary_search.c $(TEST_DIR)/group_one/binary_search.c
 	$(CC) $(CFLAGS) -o binary_search $(SRC_DIR)/group_one/binary_search.c $(TEST_DIR)/group_one/binary_search.c
@@ -41,8 +38,12 @@ test_list: $(SRC_DIR)/group_one/linkedlist.c $(TEST_DIR)/group_one/linkedlist.c
 	$(CC) $(CFLAGS) -o linkedlist $(SRC_DIR)/group_one/linkedlist.c $(TEST_DIR)/group_one/linkedlist.c
 	./linkedlist
 
+test_rev: $(SRC_DIR)/group_one/reverse_list.c $(TEST_DIR)/group_one/reverse_list.c
+	$(CC) $(CFLAGS) -o reverse_list $(SRC_DIR)/group_one/reverse_list.c $(TEST_DIR)/group_one/reverse_list.c
+	./reverse_list
+
 # Clean up
 clean:
-	rm -f binary_search test_bubblesort linear_search stack queue linkedlist
+	rm -f binary_search test_bubblesort linear_search stack queue linkedlist reverse_list
 
 .PHONY: all group_one clean

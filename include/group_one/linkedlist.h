@@ -1,7 +1,6 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,5 +24,7 @@ void insert_at(struct list *l, int val, int idx);
 int remove_at(struct list *l, int idx);
 int get(struct list *l, int idx);
 void print_list(struct list *l);
+void reverse_i(struct list *l);
+void reverse_r(struct list *l);
 
 #endif
