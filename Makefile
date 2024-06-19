@@ -11,13 +11,12 @@ TEST_DIR = ./tests
 all: group_one
 
 # Group One Target
-group_one: binary_search bubblesort linear_search stack queue linkedlist reverse_list
+group_one: binary_search bubblesort linear_search stack queue linkedlist reverse_list quicksort doubly_linked_list
 
 test_binary_search: $(SRC_DIR)/group_one/binary_search.c $(TEST_DIR)/group_one/binary_search.c
 	$(CC) $(CFLAGS) -o binary_search $(SRC_DIR)/group_one/binary_search.c $(TEST_DIR)/group_one/binary_search.c
 	./binary_search
 
-# Compile and test bubble sort
 test_bubblesort: $(SRC_DIR)/group_one/bubblesort.c $(TEST_DIR)/group_one/bubblesort.c
 	$(CC) $(CFLAGS) -o bubblesort $(SRC_DIR)/group_one/bubblesort.c $(TEST_DIR)/group_one/bubblesort.c
 	./bubblesort
@@ -42,8 +41,16 @@ test_rev: $(SRC_DIR)/group_one/reverse_list.c $(TEST_DIR)/group_one/reverse_list
 	$(CC) $(CFLAGS) -o reverse_list $(SRC_DIR)/group_one/reverse_list.c $(TEST_DIR)/group_one/reverse_list.c
 	./reverse_list
 
+test_quick_sort: $(SRC_DIR)/group_one/quick_sort.c $(TEST_DIR)/group_one/quick_sort.c
+	$(CC) $(CFLAGS) -o quick_sort $(SRC_DIR)/group_one/quick_sort.c $(TEST_DIR)/group_one/quick_sort.c
+	./quick_sort
+
+test_double_list: $(SRC_DIR)/group_one/doubly_linked_list.c $(TEST_DIR)/group_one/doubly_linked_list.c
+	$(CC) $(CFLAGS) -o doubly_linked_list $(SRC_DIR)/group_one/doubly_linked_list.c $(TEST_DIR)/group_one/doubly_linked_list.c
+	./doubly_linked_list
+
 # Clean up
 clean:
-	rm -f binary_search test_bubblesort linear_search stack queue linkedlist reverse_list
+	rm -f binary_search bubblesort linear_search stack queue linkedlist reverse_list quick_sort doubly_linked_list
 
 .PHONY: all group_one clean
