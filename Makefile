@@ -49,6 +49,10 @@ test_double_list: $(SRC_DIR)/group_one/doubly_linked_list.c $(TEST_DIR)/group_on
 	$(CC) $(CFLAGS) -o doubly_linked_list $(SRC_DIR)/group_one/doubly_linked_list.c $(TEST_DIR)/group_one/doubly_linked_list.c
 	./doubly_linked_list
 
+test_vec: $(SRC_DIR)/group_one/vec.c $(TEST_DIR)/group_one/vec.c
+	$(CC) $(CFLAGS) -o vec $(SRC_DIR)/group_one/vec.c $(TEST_DIR)/group_one/vec.c
+	./vec
+
 # Clean up
 clean:
 	rm -f binary_search bubblesort linear_search stack queue linkedlist reverse_list quick_sort doubly_linked_list
