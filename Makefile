@@ -53,6 +53,18 @@ test_vec: $(SRC_DIR)/group_one/vec.c $(TEST_DIR)/group_one/vec.c
 	$(CC) $(CFLAGS) -o vec $(SRC_DIR)/group_one/vec.c $(TEST_DIR)/group_one/vec.c
 	./vec
 
+test_in_order: $(SRC_DIR)/group_one/in_order.c $(TEST_DIR)/group_one/in_order.c
+	$(CC) $(CFLAGS) -o in_order $(SRC_DIR)/group_one/in_order.c $(TEST_DIR)/group_one/in_order.c
+	./in_order
+
+test_pre_order: $(SRC_DIR)/group_one/pre_order.c $(TEST_DIR)/group_one/pre_order.c
+	$(CC) $(CFLAGS) -o pre_order $(SRC_DIR)/group_one/pre_order.c $(TEST_DIR)/group_one/pre_order.c
+	./pre_order
+
+test_post_order: $(SRC_DIR)/group_one/post_order.c $(TEST_DIR)/group_one/post_order.c
+	$(CC) $(CFLAGS) -o post_order $(SRC_DIR)/group_one/post_order.c $(TEST_DIR)/group_one/post_order.c
+	./post_order
+
 # Clean up
 clean:
 	rm -f binary_search bubblesort linear_search stack queue linkedlist reverse_list quick_sort doubly_linked_list

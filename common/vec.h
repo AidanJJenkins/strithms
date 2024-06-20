@@ -13,7 +13,7 @@ void resize_vec(vec *arr);
 void push(vec *arr, int item);
 int pop(vec *arr);
 int get_at(vec *arr, int idx);
-int del_at(vec *arr, int idx);
+void del_at(vec *arr, int idx);
 void del_vec(vec *arr);
 
 #endif
