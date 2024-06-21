@@ -1,48 +1,48 @@
-#include "../../include/group_one/stack.h"
-#include <assert.h>
-#include <stddef.h>
-#include <stdio.h>
+#include "linkedlist.h"
 #include <stdlib.h>
 
-void test_stack() {
-  stack s;
-  init_stack(&s);
-  assert(&s != NULL);
-  assert(s.count == 0);
+stack *init_stack() {
+  stack *s = malloc(sizeof(stack));
+  s->head = NULL;
+  s->count = 0;
 
-  int *val1 = (int *)malloc(sizeof(int));
-  *val1 = 5;
-  push(&s, val1);
-  assert(s.count == 1);
-  assert(*(int *)s.head->val == 5);
-
-  int *val2 = (int *)malloc(sizeof(int));
-  *val2 = 9;
-  push(&s, val2);
-
-  int *val3 = (int *)malloc(sizeof(int));
-  *val3 = 10;
-  push(&s, val3);
-
-  assert(s.count == 3);
-
-  int *popped = (int *)pop(&s);
-  assert(*popped == 10);
-  free(popped);
-
-  popped = (int *)pop(&s);
-  assert(*popped == 9);
-  free(popped);
-
-  popped = (int *)pop(&s);
-  assert(*popped == 5);
-  free(popped);
-
-  assert(s.count == 0);
-
-  printf("Stack tests passed\n");
+  return s;
 }
-int main() {
-  test_stack();
-  return 0;
+
+Node *create_node(int val) {
+  Node *n = malloc(sizeof(Node));
+
+  n->val = val;
+  n->next = NULL;
+  return n;
 }
+
+void push(stack *s, int data) {
+  Node *n = create_node(data);
+  s->count++;
+
+  if (s->head == NULL) {
+    s->head = n;
+    return;
+  }
+
+  n->next = s->head;
+  s->head = n;
+}
+
+int pop(stack *s) {
+  if (s->count == 0) {
+    return -1;
+  }
+
+  Node *temp = s->head;
+  int popped_value = temp->val;
+
+  s->head = s->head->next;
+  free(temp);
+
+  s->count--;
+  return popped_value;
+}
+
+int peek(stack *s) { return s->head->val; }

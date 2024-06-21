@@ -1,62 +1,166 @@
-#include "../../include/group_one/doubly_linked_list.h"
-#include <assert.h>
-#include <stdio.h>
+#include "linkedlist.h"
 #include <stdlib.h>
+#include <sys/_types/_null.h>
 
-void test_doubly_list() {
-  d_list *l = init_d_list();
+d_list *init_d_list() {
+  d_list *list = malloc(sizeof(d_list));
+  list->head = NULL;
+  list->tail = NULL;
+  list->count = 0;
 
-  int inputs[] = {2, 25, 42, 7, 21, 9, 68, 1009, 200};
-  for (int i = 0; i < 9; i++) {
-    d_append(l, inputs[i]);
-    assert(l->tail->val == inputs[i]);
+  return list;
+}
+
+d_node *init_d_node(int val) {
+  d_node *n = malloc(sizeof(d_node));
+  n->val = val;
+  n->prev = NULL;
+  n->next = NULL;
+  return n;
+}
+
+void d_append(d_list *l, int val) {
+  d_node *n = init_d_node(val);
+  l->count++;
+
+  if (l->head == NULL) {
+    l->head = n;
+    l->tail = n;
+    return;
   }
 
-  assert(l->count == 9);
-  d_prepend(l, 48);
-  assert(l->head->val == 48);
-  assert(l->count == 10);
-
-  int r = remove_node(l, l->head);
-  assert(r == 48);
-
-  d_node *gotten = get_at(l, 3);
-  assert(gotten->val == 7);
-
-  int removed = d_remove_at(l, 3);
-  assert(removed == 7);
-
-  d_insert_at(l, 69, l->count);
-  d_insert_at(l, 12, 3);
-  assert(l->tail->val == 69);
-
-  d_node *g2 = get_at(l, 3);
-  assert(g2->val == 12);
-
-  d_insert_at(l, 21, 0);
-  assert(l->head->val == 21);
-  // print_d_list(l);
-  // int removed = remove_val(l, 21);
-  // assert(removed == 21);
-  // assert(l->count == 9);
-  //
-  // int gotten = get(l, 3);
-  // assert(gotten == 42);
-  //
-  // int gotten2 = get(l, 0);
-  // assert(gotten2 == 48);
-  //
-  // insert_at(l, 34, 3);
-  // int gotten3 = get(l, 3);
-  // assert(gotten3 == 34);
-  //
-  // int removed2 = remove_at(l, 4);
-  // assert(removed2 == 42);
-  // assert(l->count == 9);
-  free(l);
-  printf("Doubly linked list tests passed\n");
+  l->tail->next = n;
+  n->prev = l->tail;
+  l->tail = n;
 }
-int main() {
-  test_doubly_list();
-  return 0;
+
+void d_prepend(d_list *l, int val) {
+  d_node *n = init_d_node(val);
+  l->count++;
+
+  if (l->head == NULL) {
+    l->head = n;
+    l->tail = n;
+    return;
+  }
+
+  n->next = l->head;
+  l->head->prev = n;
+  l->head = n;
+}
+
+int remove_node(d_list *l, d_node *n) {
+  if (l == NULL || n == NULL) {
+    return -1;
+  }
+
+  if (l->count == 0) {
+    return -1;
+  }
+
+  l->count--;
+
+  if (l->count == 0) {
+    int out = n->val;
+    l->head = NULL;
+    l->tail = NULL;
+
+    free(n);
+    return out;
+  }
+
+  if (n->prev != NULL) {
+    n->prev->next = n->next;
+  }
+
+  if (n->next != NULL) {
+    n->next->prev = n->prev;
+  }
+
+  if (l->head == n) {
+    l->head = n->next;
+  }
+
+  if (l->tail == n) {
+    l->tail = n->prev;
+  }
+
+  int out = n->val;
+  free(n);
+
+  return out;
+}
+
+d_node *get_at(d_list *l, int idx) {
+  if (l->head == NULL || idx < 0 || idx > l->count) {
+    return NULL;
+  }
+
+  d_node *curr = l->head;
+  for (int i = 0; i < idx; i++) {
+    curr = curr->next;
+  }
+
+  return curr;
+}
+
+void d_insert_at(d_list *l, int val, int idx) {
+  if (l->head == NULL || idx < 0 || idx > l->count) {
+    printf("idx out of range");
+  } else if (idx == 0) {
+    d_prepend(l, val);
+    return;
+  } else if (idx == l->count) {
+    d_append(l, val);
+    return;
+  }
+
+  l->count++;
+  d_node *n = init_d_node(val);
+  d_node *curr = get_at(l, idx);
+
+  n->next = curr;
+  n->prev = curr->prev;
+  curr->prev = n;
+
+  if (n->prev != NULL) {
+    n->prev->next = n;
+  }
+}
+
+int d_remove_at(d_list *l, int idx) {
+  if (l->head == NULL || idx < 0 || idx > l->count) {
+    return -1;
+  }
+
+  d_node *curr = get_at(l, idx);
+  if (curr != NULL) {
+    return remove_node(l, curr);
+  }
+
+  return -1;
+}
+
+int d_remove(d_list *l, int val) {
+  if (l->head == NULL) {
+    return -1;
+  }
+
+  if (l->head->val == val) {
+    return remove_node(l, l->head);
+  }
+
+  d_node *prev = l->head;
+  d_node *curr = l->head->next;
+
+  while (curr != NULL) {
+    if (curr->val == val) {
+      return remove_node(l, curr);
+    }
+
+    prev = prev->next;
+    curr = curr->next;
+  }
+
+  return -1;
 }
