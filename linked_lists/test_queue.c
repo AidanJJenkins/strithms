@@ -4,6 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+List *init() {
+  List *l = malloc(sizeof(List));
+  l->count = 0;
+  l->head = NULL;
+  l->tail = NULL;
+
+  return l;
+}
+
 void test_queue() {
   struct list *l = init();
   assert(&l != NULL);
