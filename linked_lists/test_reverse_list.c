@@ -33,7 +33,7 @@ void append(List *l, int val) {
   l->tail = n;
 }
 
-int pop(List *l) {
+int r_pop(List *l) {
   Node *temp = l->head;
   int out = temp->val;
 
@@ -42,14 +42,6 @@ int pop(List *l) {
 
   free(temp);
   return out;
-}
-
-void print_list(List *l) {
-  Node *current = l->head;
-  while (current != NULL) {
-    printf("curr: %d\n", current->val);
-    current = current->next;
-  }
 }
 
 void revArray(int arr[], int size) {
@@ -75,13 +67,31 @@ void test_reverse() {
   revArray(inputs, 9);
 
   for (int i = 0; i < 9; i++) {
-    int popped = pop(l);
+    int popped = r_pop(l);
     assert(popped == inputs[i]);
   }
-  printf("Reverse list tests passed\n");
+}
+
+void test_reverse_recursive() {
+  List *l = init();
+
+  int inputs[] = {2, 25, 42, 7, 21, 9, 68, 1009, 200};
+  for (int i = 0; i < 9; i++) {
+    append(l, inputs[i]);
+  }
+
+  reverse_r(l);
+  revArray(inputs, 9);
+
+  for (int i = 0; i < 9; i++) {
+    int popped = r_pop(l);
+    assert(popped == inputs[i]);
+  }
 }
 
 int main() {
   test_reverse();
+  test_reverse_recursive();
+  printf("Reverse list tests passed\n");
   return 0;
 }

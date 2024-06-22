@@ -24,9 +24,12 @@ void insert_at(struct list *l, int val, int idx);
 int remove_at(struct list *l, int idx);
 int get(struct list *l, int idx);
 void print_list(struct list *l);
+
+// reversing
 void reverse_i(struct list *l);
 void reverse_r(struct list *l);
-
+void reverse_helper(Node *current, Node *prev, List *l);
+int r_pop(List *l); // for testing purposes
 // stack
 typedef struct stack {
   int count;
