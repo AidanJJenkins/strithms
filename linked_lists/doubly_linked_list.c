@@ -1,6 +1,5 @@
 #include "linkedlist.h"
 #include <stdlib.h>
-#include <sys/_types/_null.h>
 
 d_list *init_d_list() {
   d_list *list = malloc(sizeof(d_list));

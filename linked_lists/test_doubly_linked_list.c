@@ -1,8 +1,16 @@
-#include "./doubly_linked_list.h"
+#include "./linkedlist.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+void print_d_list(d_list *l) {
+  d_node *curr = l->head;
+
+  while (curr != NULL) {
+    printf("current node value: %d \n", curr->val);
+    curr = curr->next;
+  }
+}
 void test_doubly_list() {
   d_list *l = init_d_list();
 
@@ -35,27 +43,19 @@ void test_doubly_list() {
 
   d_insert_at(l, 21, 0);
   assert(l->head->val == 21);
+  int removed1 = d_remove(l, 21);
+  assert(removed1 == 21);
+  assert(l->count == 10);
+
+  int removed2 = d_remove_at(l, 2);
+  assert(removed2 == 42);
+  assert(l->count == 9);
+
   // print_d_list(l);
-  // int removed = remove_val(l, 21);
-  // assert(removed == 21);
-  // assert(l->count == 9);
-  //
-  // int gotten = get(l, 3);
-  // assert(gotten == 42);
-  //
-  // int gotten2 = get(l, 0);
-  // assert(gotten2 == 48);
-  //
-  // insert_at(l, 34, 3);
-  // int gotten3 = get(l, 3);
-  // assert(gotten3 == 34);
-  //
-  // int removed2 = remove_at(l, 4);
-  // assert(removed2 == 42);
-  // assert(l->count == 9);
   free(l);
   printf("Doubly linked list tests passed\n");
 }
+
 int main() {
   test_doubly_list();
   return 0;
