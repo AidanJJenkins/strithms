@@ -1,21 +1,20 @@
-#include "../../include/group_one/binary_search.h"
-#include <assert.h>
-#include <stdio.h>
+#include "search.h"
 
-void test_binary_search() {
-  int arr[] = {2, 3, 4, 10, 40};
+bool binary_search(int haystack[], int needle, int size) {
+  int lo = 0;
+  int hi = size;
 
-  assert(binary_search(arr, 10, 5) == true);
-  assert(binary_search(arr, 2, 5) == true);
-  assert(binary_search(arr, 40, 5) == true);
-  assert(binary_search(arr, 5, 5) == false);
-  assert(binary_search(arr, -1, 5) == false);
-  assert(binary_search(arr, 100, 5) == false);
+  while (lo <= hi) {
+    int m = lo + (hi - lo) / 2;
 
-  printf("Binary search tests passed!\n");
-}
+    if (haystack[m] == needle) {
+      return true;
+    } else if (haystack[m] > needle) {
+      hi = m - 1;
+    } else {
+      lo = m + 1;
+    }
+  }
 
-int main() {
-  test_binary_search();
-  return 0;
+  return false;
 }

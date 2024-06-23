@@ -1,33 +1,50 @@
-#include "../../include/group_one/vec.h"
-#include <assert.h>
+#include "vec.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-// havnt tested the delete at  yet
-void test_vec() {
-  int inputs[] = {21, 68, 45, 2, 100, 77};
-  vec *v = new_vec();
+vec *new_vec() {
+  vec *v = malloc(sizeof(vec));
+  v->count = 0;
+  v->capacity = 4;
+  v->items = (int *)malloc(v->capacity * sizeof(int));
 
-  for (int i = 0; i < 6; i++) {
-    push(v, inputs[i]);
-  }
-
-  for (int j = 0; j < v->count; j++) {
-    assert(inputs[j] == v->items[j]);
-  }
-
-  int popped = pop(v);
-  assert(popped == 21);
-  int popped2 = pop(v);
-  assert(popped2 == 68);
-
-  int gotten = get_at(v, 1);
-  assert(gotten == 2);
-
-  del_vec(v);
-  printf("Vec tests pass");
+  return v;
 }
 
-int main() {
-  test_vec();
-  return 0;
+void resize_vec(vec *arr) {
+  arr->capacity *= 2;
+  int *new_items = (int *)realloc(arr->items, arr->capacity * sizeof(int));
+  if (new_items == NULL) {
+    perror("Failed to reallocate memory for vector items");
+    free(arr->items);
+    free(arr);
+    exit(EXIT_FAILURE);
+  }
+  arr->items = new_items;
+}
+
+void push(vec *arr, int item) {
+  if (arr->count == arr->capacity) {
+    resize_vec(arr);
+  }
+  arr->count++;
+  arr->items[arr->count - 1] = item;
+}
+
+int pop(vec *arr) {
+  if (arr->count == 0) {
+    fprintf(stderr, "Error: Cannot pop from an empty vector\n");
+    exit(EXIT_FAILURE);
+  }
+  int item = arr->items[0];
+  for (size_t i = 1; i < arr->count; ++i) {
+    arr->items[i - 1] = arr->items[i];
+  }
+  arr->count--;
+  return item;
+}
+
+void del_vec(vec *arr) {
+  free(arr->items);
+  free(arr);
 }

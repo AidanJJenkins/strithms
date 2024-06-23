@@ -1,26 +1,19 @@
-#include "../../include/group_one/bubblesort.h"
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "sorting.h"
+#include <stdbool.h>
 
-#define MAX 50
-
-static void test() {
-  int array_sort[MAX] = {0};
-
-  for (int i = 0; i < MAX; i++) {
-    array_sort[i] = rand() % 101;
+void bubblesort(int *arr, int size) {
+  bool s = true;
+  while (s) {
+    s = false;
+    for (int i = 0; i < size - 1; i++) { // Corrected loop bounds
+      if (arr[i] > arr[i + 1]) {
+        // Swap arr[i] and arr[i + 1]
+        int temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+        s = true;
+      }
+    }
+    size--; // Reduce the range of the next pass
   }
-
-  bubblesort(array_sort, MAX);
-
-  for (int i = 0; i < MAX - 1; i++) {
-    assert(array_sort[i] <= array_sort[i + 1]);
-  }
-  printf("Bubblesort tests passed!\n");
-}
-
-int main() {
-  test();
-  return 0;
 }

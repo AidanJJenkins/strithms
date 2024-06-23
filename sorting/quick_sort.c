@@ -1,29 +1,33 @@
-#include "../../include/group_one/quick_sort.h"
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "sorting.h"
 
-#define MAX 50
-
-static void test_quick_sort() {
-  int arr[MAX] = {0};
-
-  for (int i = 0; i < MAX; i++) {
-    arr[i] = rand() % 101;
-  }
-
-  int n = sizeof(arr) / sizeof(arr[0]);
-
-  // Function call
-  quickSort(arr, 0, n - 1);
-
-  for (int i = 0; i < MAX - 1; i++) {
-    assert(arr[i] <= arr[i + 1]);
-  }
-  printf("Quick sort tests passed!\n");
+void swap(int *p1, int *p2) {
+  int temp;
+  temp = *p1;
+  *p1 = *p2;
+  *p2 = temp;
 }
 
-int main() {
-  test_quick_sort();
-  return 0;
+int partition(int arr[], int low, int high) {
+  int pivot = arr[high];
+
+  int i = (low - 1);
+
+  for (int j = low; j <= high - 1; j++) {
+    if (arr[j] < pivot) {
+      i++;
+      swap(&arr[i], &arr[j]);
+    }
+  }
+  swap(&arr[i + 1], &arr[high]);
+  return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+  if (low < high) {
+
+    int pi = partition(arr, low, high);
+
+    quickSort(arr, low, pi - 1);
+    quickSort(arr, pi + 1, high);
+  }
 }
