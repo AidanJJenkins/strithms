@@ -1,4 +1,4 @@
-#include "order.h"
+#include "tree.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,11 +51,35 @@ void test_in_order() {
   for (int i = 0; i < 10; i++) {
     assert(res->items[i] == expected[i]);
   }
+}
 
-  printf("In order search passed\n");
+void test_pre_order() {
+  bt_node *root = create_tree();
+
+  vec *res = pre_order_search(root);
+
+  int expected[] = {20, 10, 5, 7, 15, 50, 30, 29, 45, 100};
+
+  for (int i = 0; i < 10; i++) {
+    assert(res->items[i] == expected[i]);
+  }
+}
+
+void test_post_order() {
+  bt_node *root = create_tree();
+
+  vec *res = post_order_search(root);
+
+  int expected[] = {7, 5, 15, 10, 29, 45, 30, 100, 50, 20};
+  for (int i = 0; i < 10; i++) {
+    assert(res->items[i] == expected[i]);
+  }
 }
 
 int main() {
+  test_pre_order();
   test_in_order();
+  test_post_order();
+  printf("Pre, in, and post order tests passed\n");
   return 0;
 }
