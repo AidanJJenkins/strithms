@@ -52,4 +52,19 @@ bt_node *r(arr *arr);
 
 // invert tree
 bt_node *invert(bt_node *root);
+
+// minheap
+typedef struct minheap {
+  vec *data;
+  int length;
+} minheap;
+minheap *create_heap();
+void heap_insert(minheap *h, int value);
+int heap_del(minheap *h);
+void heapify_down(minheap *h, int idx);
+void heapify_up(minheap *h, int idx);
+int parent(int idx);
+int left_child(int idx);
+int right_child(int idx);
+
 #endif
