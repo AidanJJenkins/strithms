@@ -34,4 +34,22 @@ bt_node *delete_recursive(bt_node *root, int value);
 bt_node *min_val_node(bt_node *node);
 void Delete(tree *tree, int value);
 
+// comapre tree
+bool compare_trees(bt_node *a, bt_node *b);
+
+// btbfs
+bool btbfs(bt_node *head, int needle);
+
+typedef struct DynamicArray {
+  bt_node **items;
+  int size;
+  int capacity;
+} arr;
+
+arr *createArr(int initialCapacity);
+void append(arr *arr, bt_node *item);
+bt_node *r(arr *arr);
+
+// invert tree
+bt_node *invert(bt_node *root);
 #endif
